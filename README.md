@@ -1,4 +1,4 @@
-# Proxy-Scrapper-and-Scanner
+# Proxy-Scraper-and-Scanner
 Grab proxies by web-scraping and scan them.
 
 **Installation**
