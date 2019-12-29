@@ -1,0 +1,4 @@
+HTTP,https://api.proxyscrape.com/?request=displayproxies&proxytype=http&timeout=7000,https://hidemy.name/en/proxy-list/?type=h#list,http://spys.one/en/http-proxy-list/,https://free-proxy-list.net/anonymous-proxy.html
+HTTPS,https://api.proxyscrape.com/?request=displayproxies&proxytype=https&timeout=7000,https://hidemy.name/en/proxy-list/?type=s#list,http://spys.one/en/http-proxy-list/,https://www.sslproxies.org/,https://free-proxy-list.net/anonymous-proxy.html
+SOCKS4,https://api.proxyscrape.com/?request=displayproxies&proxytype=socks4&timeout=7000,https://hidemy.name/en/proxy-list/?type=4#list,http://spys.one/en/socks-proxy-list/,https://www.socks-proxy.net/
+SOCKS5,https://api.proxyscrape.com/?request=displayproxies&proxytype=socks5&timeout=7000,https://hidemy.name/en/proxy-list/?type=5#list,http://spys.one/en/socks-proxy-list/
