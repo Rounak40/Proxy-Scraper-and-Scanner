@@ -27,7 +27,7 @@ def parse_proxies_from_html_response(response_data):
     for i in data:
         if "." in i:
             if i.split(":")[1].isdigit():
-                proxies.append(i+"\n") # add \n to make new line for saving in text file
+                proxies.append(i+"\n")
     return proxies
 
 def scrap_proxies(proxy_type=None):
@@ -46,45 +46,34 @@ def scrap_proxies(proxy_type=None):
     with open(proxy_type.upper()+"-proxies.txt","w+") as file:
         file.writelines(proxy_list)
     print("Saved Successfully!")
-
+    ask_input()
 
 def check_proxy_by_url(proxy,url,timeout):
+    global good_list
     p = dict(http=proxy, https=proxy)
     try:
         r = requests.get(url, proxies=p, timeout=timeout)
-        return True
+        if r.status_code == 200:
+            good_list.append(proxy+"\n")
     except Exception as e:
-        return False
-
-def scan_proxies(proxy_type,proxy_list):
-    global good_list
-    working_list=[]
-    proxy_list2 = [proxy_type.lower()+"://"+i.strip() for i in proxy_list]
-    for i in proxy_list2:
-        #google_check = check_proxy_by_url(i,"http://google.com",10)
-        ipinfo_check = check_proxy_by_url(i,"http://ipinfo.io/json",10)
-        if ipinfo_check:
-            print(i,"Working.")
-            working_list.append(i+"\n")# add \n to make new line for saving in text file
-                
-    good_list += working_list
-
+        pass
 
 def main(proxy_type,proxy_list):
+    global good_list
+    proxy_list2 = [proxy_type.lower()+"://"+i.strip() for i in proxy_list]
     thread_list = []
-    lists = proxy_list
-    count = 0
+    lists = proxy_list2
+    print("Scanning",len(lists),proxy_type.upper(),"proxies...")
     for l in lists:
-        thread_list.append(Thread(target=scan_proxies, args=(proxy_type,[l])))
-        thread_list[len(thread_list)-1].start()
-        count += 1
-
+        t = Thread(target=check_proxy_by_url, args=[l,"http://ipinfo.io/json",10])
+        t.start()
+        thread_list.append(t)
     for x in thread_list:
         x.join()
-    global good_list
     print('Proxies Scanned .')
     with open(proxy_type.upper()+"-working-proxies.txt","w+") as file:
         file.writelines(good_list)
+    ask_input()
         
 def ask_proxy_type():
     proxy_type = input("Which type of proxy you want to Scrape/Scan?\n1.HTTP\n2.HTTPS\n3.SOCKS4\n4.SOCKS5\n5.Back\n==>")
@@ -103,7 +92,7 @@ def ask_proxy_type():
         ask_proxy_type()
  
 def ask_input():
-    user_input = input("What you want to do? (Enter 1 or 2)\n1.Scrape Proxies.\n2.Scan Proxies (Unoptimized)\n==>")
+    user_input = input("What you want to do? (Enter 1 or 2)\n1.Scrape Proxies.\n2.Scan Proxies \n==>")
     if str(user_input) == "1":
         proxy_type = ask_proxy_type()
         scrap_proxies(proxy_type)
