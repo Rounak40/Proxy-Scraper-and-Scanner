@@ -2,10 +2,11 @@
 Grab proxies by web-scraping and scan them.
 
 **Installation**
-```
+```	```
+pip install bs4	
 pip install requests
-```
+```	```
 
-**How to use it?**
+**How to add sites to grab proxies?**	**How to use it?**
 
-You can see example in ```example.py```.
+Just open the file ```site urls.txt``` and put the website url there and save it.
